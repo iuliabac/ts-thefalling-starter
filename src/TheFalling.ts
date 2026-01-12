@@ -3,27 +3,19 @@ import Game from './Game.js';
 import CanvasRenderer from './CanvasRenderer.js';
 import KeyListener from './KeyListener.js';
 import Player from './Player.js';
-import LightItem from './LightItem.js';
-import Orb from './Orb.js';
-import Monster from './Monster.js';
-import Cloak from './Cloak.js';
 
 export default class TheFalling extends Game {
   private canvas: HTMLCanvasElement;
 
-  private player: Player;
-
   private keyListener: KeyListener;
+
+  private player: Player;
 
   private lightforce: number;
 
   private timeToNextLightforceDrop: number;
 
   private monstersCaught: number;
-
-  private lightItems: LightItem[] = [];
-
-  private cloak: Cloak | null;
 
   private timeToNextItem: number;
 
@@ -44,7 +36,6 @@ export default class TheFalling extends Game {
     this.timeToNextLightforceDrop = 1000;
     this.monstersCaught = 0;
 
-    this.cloak = null;
     this.cloakActive = 0;
   }
 
@@ -55,6 +46,7 @@ export default class TheFalling extends Game {
     if (this.keyListener.isKeyDown('ArrowLeft')) {
       this.player.moveLeft();
     }
+
     if (this.keyListener.isKeyDown('ArrowRight')) {
       this.player.moveRight();
     }
@@ -64,14 +56,6 @@ export default class TheFalling extends Game {
     this.timeToNextItem -= elapsed;
     if (this.timeToNextItem < 0) {
       const random: number = Math.random();
-      if (random > 0.9 && this.cloak === null) {
-        this.cloak = new Cloak(this.canvas.width, this.canvas.height);
-      }
-      if (random > 0.3) {
-        this.lightItems.push(new Orb(this.canvas.width, this.canvas.height));
-      } else {
-        this.lightItems.push(new Monster(this.canvas.width, this.canvas.height));
-      }
       this.timeToNextItem = (Math.random() * 300) + 300;
     }
   }
@@ -84,57 +68,9 @@ export default class TheFalling extends Game {
    * @returns whether the game is still running
    */
   public update(delta: number): boolean {
-    this.cloakActive -= delta;
-    for (const item of this.lightItems) {
-      item.update(delta);
-    }
-    if (this.cloak !== null) {
-      this.cloak.update(delta);
-    }
-    this.player.update(delta);
+    this.player.Update(delta);
 
-    this.timeToNextLightforceDrop -= delta;
-    if (this.timeToNextLightforceDrop < 0) {
-      this.lightforce -= 1;
-      this.timeToNextLightforceDrop = 1000;
-    }
-
-    this.spawnNewItem(delta);
-
-    for (let i: number = this.lightItems.length - 1; i >= 0; i -= 1) {
-      const item: LightItem = this.lightItems[i];
-      if (this.player.collidesWithItem(item)) {
-        if (item instanceof Monster) {
-          if (this.cloakActive >= 0) {
-            continue;
-          }
-          this.monstersCaught += 1;
-        }
-        this.lightforce += item.getLightForce();
-        this.lightItems.splice(i, 1);
-      }
-      if (item.getPosY() + item.getHeight() < 0) {
-        this.lightItems.splice(i, 1);
-      }
-    }
-
-    if (this.cloak !== null && this.player.collidesWithItem(this.cloak)) {
-      if (this.cloakActive < 0) {
-        this.cloakActive = 0;
-      }
-      this.cloakActive += 15000;
-      this.cloak = null;
-    }
-
-    if (this.cloak !== null
-      && (this.cloak.getPosY() + this.cloak.getHeight() < 0
-        || this.cloak.getPosX() + this.cloak.getWidth() < 0
-        || this.cloak.getPosX() > this.canvas.width)) {
-      this.cloak = null;
-    }
-
-
-    return !this.gameOver();
+    return true;
   }
 
   private gameOver(): boolean {
@@ -148,10 +84,6 @@ export default class TheFalling extends Game {
     CanvasRenderer.clearCanvas(this.canvas);
 
     this.player.render(this.canvas);
-    this.lightItems.forEach((item: LightItem) => item.render(this.canvas));
-    if (this.cloak !== null) {
-      this.cloak.render(this.canvas);
-    }
 
     if (this.cloakActive > 0) {
       CanvasRenderer.writeText(this.canvas, `Cloak Time: ${Math.round(this.cloakActive / 1000)}`, 10, 110, 'left', 'Arial', 30, 'cyan');
