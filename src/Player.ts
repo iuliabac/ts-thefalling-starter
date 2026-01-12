@@ -16,25 +16,11 @@ export default class Player extends CanvasItem {
   }
 
   /**
-   * auyfdsuasgfduygf
-   */
-  public moveLeft(): void {
-    this.direction =- 1;
-  }
-
-  /**
-   * aisgduygasduyio
-   */
-  public moveRight(): void {
-    this.direction =+ 1;
-  }
-
-  /**
    *sdfsdfsdfds
    * @param delta tfyifdt
    */
-  public update(delta: number): void {
-    this.posX += this.direction * delta * 0.5;
+  public move(posX: number): void {
+    this.posX = posX;
 
     if (this.posX <= 0) {
       this.posX = 0;
