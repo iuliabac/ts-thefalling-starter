@@ -5,8 +5,8 @@ export default class Player extends CanvasItem {
   public constructor(maxX: number, maxY: number) {
     super();
     this.image = CanvasRenderer.loadNewImage('./assets/player.png');
-    this.posX = maxX/2;
-    this.posY = maxY/2;
+    this.posX = maxX;
+    this.posY = maxY;
   }
 
   public move(posX: number, posY: number): void {

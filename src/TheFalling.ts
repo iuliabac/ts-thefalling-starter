@@ -25,15 +25,12 @@ export default class TheFalling extends Game {
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.canvas = canvas;
-    const maxX: number = window.innerWidth;
-    const maxY: number = window.innerHeight;
+    this.canvas.height = window.innerHeight;
+    this.canvas.width = window.innerWidth;
 
-    this.canvas.height = maxY;
-    this.canvas.width = maxX;
+    this.mouselistener = new MouseListener(canvas);
 
-    this.mouselistener = new MouseListener(this.canvas);
-
-    this.player = new Player(maxX, maxY);
+    this.player = new Player(this.canvas.width, this.canvas.height);
 
     this.timeToNextItem = (Math.random() * 300) + 500;
 
