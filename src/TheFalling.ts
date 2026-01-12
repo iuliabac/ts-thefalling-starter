@@ -28,7 +28,7 @@ export default class TheFalling extends Game {
     this.canvas.width = window.innerWidth;
     this.keyListener = new KeyListener();
 
-    this.player = new Player(this.canvas.width);
+    this.player = new Player(this.canvas.height);
 
     this.timeToNextItem = (Math.random() * 300) + 500;
 
@@ -43,11 +43,11 @@ export default class TheFalling extends Game {
    * Process the input from the user
    */
   public processInput(): void {
-    if (this.keyListener.isKeyDown('ArrowLeft')) {
+    if (this.keyListener.isKeyDown('ArrowUp')) {
       this.player.moveLeft();
     }
 
-    if (this.keyListener.isKeyDown('ArrowRight')) {
+    if (this.keyListener.isKeyDown('ArrowDown')) {
       this.player.moveRight();
     }
   }
