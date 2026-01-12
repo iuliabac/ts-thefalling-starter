@@ -4,15 +4,10 @@ import CanvasRenderer from './CanvasRenderer.js';
 export default class Player extends CanvasItem {
   private maxX: number;
 
-  private direction: number;
-
   public constructor(maxX: number) {
     super();
     this.image = CanvasRenderer.loadNewImage('./assets/player.png');
-    this.posX = 50;
-    this.posY = 100;
     this.maxX = maxX;
-    this.direction = 0;
   }
 
   /**
@@ -29,8 +24,6 @@ export default class Player extends CanvasItem {
     if (this.posX + this.image.width > this.maxX) {
       this.posX = this.image.width - this.maxX;
     }
-
-    this.direction = 0;
   }
 
 
