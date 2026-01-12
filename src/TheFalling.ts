@@ -68,7 +68,7 @@ export default class TheFalling extends Game {
    * @returns whether the game is still running
    */
   public update(delta: number): boolean {
-    this.player.Update(delta);
+    this.player.update(delta);
 
     return true;
   }
