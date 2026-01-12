@@ -3,11 +3,12 @@ import Game from './Game.js';
 import CanvasRenderer from './CanvasRenderer.js';
 import KeyListener from './KeyListener.js';
 import Player from './Player.js';
+import MouseListener from './MouseListener.js';
 
 export default class TheFalling extends Game {
   private canvas: HTMLCanvasElement;
 
-  private keyListener: KeyListener;
+  private mouselistener: MouseListener;
 
   private player: Player;
 
@@ -24,11 +25,15 @@ export default class TheFalling extends Game {
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.canvas = canvas;
-    this.canvas.height = window.innerHeight;
-    this.canvas.width = window.innerWidth;
-    this.keyListener = new KeyListener();
+    const maxX: number = window.innerWidth;
+    const maxY: number = window.innerHeight;
 
-    this.player = new Player(this.canvas.height);
+    this.canvas.height = maxY;
+    this.canvas.width = maxX;
+
+    this.mouselistener = new MouseListener(this.canvas);
+
+    this.player = new Player(maxX, maxY);
 
     this.timeToNextItem = (Math.random() * 300) + 500;
 
@@ -43,13 +48,7 @@ export default class TheFalling extends Game {
    * Process the input from the user
    */
   public processInput(): void {
-    if (this.keyListener.isKeyDown('ArrowUp')) {
-      this.player.moveLeft();
-    }
-
-    if (this.keyListener.isKeyDown('ArrowDown')) {
-      this.player.moveRight();
-    }
+    this.player.move(this.mouselistener.getMousePosition().x, this.mouselistener.getMousePosition().y);
   }
 
   private spawnNewItem(elapsed: number): void {
@@ -68,7 +67,7 @@ export default class TheFalling extends Game {
    * @returns whether the game is still running
    */
   public update(delta: number): boolean {
-    this.player.update(delta);
+    //this.player.update(delta);
 
     return true;
   }

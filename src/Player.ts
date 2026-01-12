@@ -2,50 +2,22 @@ import CanvasItem from './CanvasItem.js';
 import CanvasRenderer from './CanvasRenderer.js';
 
 export default class Player extends CanvasItem {
-  private maxY: number;
-
-  private direction: number;
-
-  public constructor(maxY: number) {
+  public constructor(maxX: number, maxY: number) {
     super();
     this.image = CanvasRenderer.loadNewImage('./assets/player.png');
-    this.posX = 50;
-    this.posY = 100;
-    this.maxY = maxY;
-    this.direction = 0;
+    this.posX = maxX/2;
+    this.posY = maxY/2;
   }
 
-  /**
-   * auyfdsuasgfduygf
-   */
-  public moveLeft(): void {
-    this.direction =- 1;
-  }
-
-  /**
-   * aisgduygasduyio
-   */
-  public moveRight(): void {
-    this.direction =+ 1;
+  public move(posX: number, posY: number): void {
+    this.posX = posX;
+    this.posY = posY;
   }
 
   /**
    *sdfsdfsdfds
    * @param delta tfyifdt
    */
-  public update(delta: number): void {
-    this.posY += this.direction * delta ;
-
-    if (this.posY < 0) {
-      this.posY = 0;
-    }
-
-    if (this.posY + this.image.height > this.maxY) {
-      this.posY = this.image.height - this.maxY;
-    }
-
-    this.direction = 0;
-  }
 
 
   /**
