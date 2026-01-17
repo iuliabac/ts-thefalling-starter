@@ -7,13 +7,13 @@ export default class Monster extends LightItem {
     const random:number = Math.random();
     if (random < 0.5) {
       this.image = CanvasRenderer.loadNewImage('./assets/monster1.png');
-      this.lightForce = 1;
+      this.lightForce = -1;
     } else if (random < 0.7) {
       this.image = CanvasRenderer.loadNewImage('./assets/monster2.png');
-      this.lightForce = 2;
+      this.lightForce = -2;
     } else {
       this.image = CanvasRenderer.loadNewImage('./assets/monster3.png');
-      this.lightForce = 3;
+      this.lightForce = -3;
     }
 
     this.speed = 0.2;
