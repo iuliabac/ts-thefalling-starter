@@ -3,6 +3,8 @@ import Game from './Game.js';
 import CanvasRenderer from './CanvasRenderer.js';
 import KeyListener from './KeyListener.js';
 import Player from './Player.js';
+import LightItem from './LightItem.js';
+import Orb from './Orb.js'; // this should be correct despite the error 
 
 export default class TheFalling extends Game {
   private canvas: HTMLCanvasElement;
@@ -16,6 +18,8 @@ export default class TheFalling extends Game {
   private timeToNextLightforceDrop: number;
 
   private monstersCaught: number;
+
+  private lightItems: LightItem[] = [];
 
   private timeToNextItem: number;
 
@@ -56,6 +60,10 @@ export default class TheFalling extends Game {
     this.timeToNextItem -= elapsed;
     if (this.timeToNextItem < 0) {
       const random: number = Math.random();
+      if (random > 0.3) {
+        this.lightItems.push(new Orb(this.canvas.width, this.canvas.height));
+      }
+
       this.timeToNextItem = (Math.random() * 300) + 300;
     }
   }
@@ -68,9 +76,34 @@ export default class TheFalling extends Game {
    * @returns whether the game is still running
    */
   public update(delta: number): boolean {
-    this.player.update(delta);
+    this.player.update(delta); // updates the player
 
-    return true;
+    for (const item of this.lightItems) {
+      item.update(delta);
+    }
+
+    this.timeToNextLightforceDrop -= delta;
+    if (this.timeToNextLightforceDrop < 0) {
+      this.lightforce -= 1;
+      this.timeToNextLightforceDrop = 1000;
+    }
+
+    this.spawnNewItem(delta);
+
+    for (let i: number = this.lightItems.length - 1; i >= 0; i -= 1) {
+      const item: LightItem = this.lightItems[i];
+
+      if (this.player.collidesWithItem(item)) {
+        this.lightforce += item.getLightForce();
+        this.lightItems.splice(i, 1);
+      }
+
+      if (item.getPosY() + item.getHeight() < 0) {
+        this.lightItems.splice(i, 1);
+      }
+    }
+
+    return !this.gameOver();
   }
 
   private gameOver(): boolean {
@@ -84,6 +117,7 @@ export default class TheFalling extends Game {
     CanvasRenderer.clearCanvas(this.canvas);
 
     this.player.render(this.canvas);
+    this.lightItems.forEach((item: LightItem) => item.render(this.canvas));
 
     if (this.cloakActive > 0) {
       CanvasRenderer.writeText(this.canvas, `Cloak Time: ${Math.round(this.cloakActive / 1000)}`, 10, 110, 'left', 'Arial', 30, 'cyan');
