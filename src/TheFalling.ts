@@ -66,8 +66,6 @@ export default class TheFalling extends Game {
       } else {
         this.lightItems.push(new Monster(this.canvas.width, this.canvas.height));
       }
-
-      this.timeToNextItem = (Math.random() * 300) + 300;
     }
   }
 
