@@ -16,7 +16,7 @@ export default class Monster extends LightItem {
       this.lightForce = -3;
     }
 
-    this.speed = 0.2;
+    this.speed = 0.2 + (Math.random() * 0.2);
     this.posX = Math.random() * maxX;
     this.posY = maxY;
   }
