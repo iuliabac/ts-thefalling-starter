@@ -24,8 +24,6 @@ export default class TheFalling extends Game {
 
   private timeToNextItem: number;
 
-  private cloakActive: number;
-
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.canvas = canvas;
@@ -40,8 +38,6 @@ export default class TheFalling extends Game {
     this.lightforce = 10;
     this.timeToNextLightforceDrop = 1000;
     this.monstersCaught = 0;
-
-    this.cloakActive = 0;
   }
 
   /**
@@ -120,9 +116,6 @@ export default class TheFalling extends Game {
     this.player.render(this.canvas);
     this.lightItems.forEach((item: LightItem) => item.render(this.canvas));
 
-    if (this.cloakActive > 0) {
-      CanvasRenderer.writeText(this.canvas, `Cloak Time: ${Math.round(this.cloakActive / 1000)}`, 10, 110, 'left', 'Arial', 30, 'cyan');
-    }
     CanvasRenderer.writeText(this.canvas, `LightForce: ${this.lightforce}`, 10, 30, 'left', 'Arial', 30, 'cyan');
     CanvasRenderer.writeText(this.canvas, `Monsters: ${this.monstersCaught}`, 10, 70, 'left', 'Arial', 30, 'cyan');
     if (this.gameOver()) {
