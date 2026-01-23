@@ -62,6 +62,8 @@ export default class TheFalling extends Game {
       } else {
         this.lightItems.push(new Monster(this.canvas.width, this.canvas.height));
       }
+
+      this.timeToNextItem = (Math.random() * 300) + 300;
     }
   }
 
@@ -91,6 +93,10 @@ export default class TheFalling extends Game {
       const item: LightItem = this.lightItems[i];
 
       if (this.player.collidesWithItem(item)) {
+        if(item instanceof Monster) {
+          this.monstersCaught += 1;
+        }
+
         this.lightforce += item.getLightForce();
         this.lightItems.splice(i, 1);
       }
