@@ -91,7 +91,7 @@ export default class TheFalling extends Game {
 
     this.spawnNewItem(delta);
 
-    for (let i: number = this.lightItems.length - 1; i >= 0; i -= 1) {
+    for (let i: number = this.lightItems.length - 1; i >= 0; i--) {
       const item: LightItem = this.lightItems[i];
 
       if (this.player.collidesWithItem(item)) {

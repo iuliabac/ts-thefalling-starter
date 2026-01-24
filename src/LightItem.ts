@@ -14,7 +14,7 @@ export default abstract class LightItem extends CanvasItem {
   public getLightForce(): number {
     return this.lightForce;
   }
-  
+
   /**
    * akshyfgdjkafgsdjkagsdjhagjkdgh
    * @param delta aghsdhjagsdgasghjd
