@@ -31,7 +31,7 @@ export default class TheFalling extends Game {
     this.canvas.width = window.innerWidth;
     this.keyListener = new KeyListener();
 
-    this.player = new Player(this.canvas.width);
+    this.player = new Player(this.canvas.width, this.canvas.height);
 
     this.timeToNextItem = (Math.random() * 300) + 500;
 
@@ -103,7 +103,7 @@ export default class TheFalling extends Game {
         this.lightItems.splice(i, 1);
       }
 
-      if (item.getPosY() + item.getHeight() < 0) {
+      if (item.getPosY() > item.getHeight()) {
         this.lightItems.splice(i, 1);
       }
     }
