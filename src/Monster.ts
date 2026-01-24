@@ -2,7 +2,7 @@ import CanvasRenderer from './CanvasRenderer.js';
 import LightItem from './LightItem.js';
 
 export default class Monster extends LightItem {
-  public constructor(maxX: number, maxY: number) {
+  public constructor(maxX: number) {
     super();
     const random:number = Math.random();
     if (random < 0.5) {
@@ -18,6 +18,6 @@ export default class Monster extends LightItem {
 
     this.speed = 0.2 + (Math.random() * 0.2);
     this.posX = Math.random() * maxX;
-    this.posY = maxY;
+    this.posY = - 32;
   }
 }

@@ -20,6 +20,6 @@ export default abstract class LightItem extends CanvasItem {
    * @param delta aghsdhjagsdgasghjd
    */
   public update(delta: number): void {
-    this.posY -= this.speed * delta;
+    this.posY += this.speed * delta;
   }
 }
