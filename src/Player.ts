@@ -34,7 +34,7 @@ export default class Player extends CanvasItem {
    * @param delta tfyifdt
    */
   public update(delta: number): void {
-    this.posX += this.direction * delta * 0.5;
+    this.posX += this.direction * delta;
 
     if (this.posX <= 0) {
       this.posX = 0;
