@@ -14,15 +14,15 @@ export default class TheFalling extends Game {
 
   private player: Player;
 
-  private lightforce: number;
-
-  private timeToNextLightforceDrop: number;
-
-  private monstersCaught: number;
+  private timeToNextItem: number;
 
   private lightItems: LightItem[] = [];
 
-  private timeToNextItem: number;
+  private lightforce: number;
+
+  private monstersCaught: number;
+
+  private timeToNextLightforceDrop: number;
 
   public constructor(canvas: HTMLCanvasElement) {
     super();
