@@ -62,9 +62,9 @@ export default class TheFalling extends Game {
       const random: number = Math.random();
 
       if (random > 0.3) {
-        this.lightItems.push(new Orb(this.canvas.width, this.canvas.height));
+        this.lightItems.push(new Orb(this.canvas.width));
       } else {
-        this.lightItems.push(new Monster(this.canvas.width, this.canvas.height));
+        this.lightItems.push(new Monster(this.canvas.width));
       }
 
       this.timeToNextItem = (Math.random() * 300) + 300;
